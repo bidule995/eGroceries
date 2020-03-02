@@ -23,6 +23,10 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     private static final String ITEM_PRIORITE = "priorite";
     private static final String ITEM_REMARQUES = "remarques";
 
+    private static final String CREATE_TABLE_LISTES = "CREATE TABLE" + TABLE_LISTES + " (" +
+            LISTE_ID + " INTEGER PRIMARY KEY," +
+            LISTE_NOM + " VARCHAR(50)";
+
     public GroceryDatabase(@Nullable Context context, @Nullable String name, @Nullable CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
