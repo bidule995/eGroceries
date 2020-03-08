@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Paramètres</string>
+    <string name="priority_low">Basse</string>
+    <string name="priority_essential">Indispensable</string>
+    <string name="priority_normal">Moyenne</string>
+    <string name="action_create_list">Nouvelle liste de courses</string>
+    <string name="cancel_create_list">Création de la liste annulée</string>
+    <string name="enter_list_name">Entrez le nom de la liste</string>
+    <string name="add">Ajouter</string>
+    <string name="nom_liste_vide">Merci d\'entrer un nom</string>
 </resources>

@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="5dip" >
+    android:orientation="vertical"
+    android:padding="5dip">
 
-    <TextView
-        android:id="@+id/listeNom"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/listeNom"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/listProgressValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="end"
+            android:textAlignment="viewEnd"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/listProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="372dp"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="17sp" />
+        android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/listeDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/listeNom"
-        android:layout_below="@id/listeNom"
-        android:layout_alignParentEnd="true"
-        android:textColor="#343434"
-        android:textSize="14sp" />
-
-</RelativeLayout>
+</LinearLayout>

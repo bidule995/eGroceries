@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreateList">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_gravity="clip_horizontal|center" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="382dp"
+        android:layout_height="149dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="615dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/nomListe"
+                android:layout_width="242dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/enter_list_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/ajouterListe"
+                android:layout_width="wrap_content"
+                android:layout_height="58dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="20dp"
+                android:text="@string/add"
+                android:onClick="onClickAjouter"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
