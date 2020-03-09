@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Affichage des listes
-        GroceryDatabase db = new GroceryDatabase(this);
+        final GroceryDatabase db = new GroceryDatabase(this);
         listeListes = db.getListes();
         ListView lv = findViewById(R.id.listeListes);
         ListAdapter adapter = new SimpleAdapter(MainActivity.this, listeListes, R.layout.list_row_listes,
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, GroceryList.class);
-
-                intent.putExtra("ID_LISTE", listeListes.get(position).toString());
+                intent.putExtra("ID_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_ID));
+                intent.putExtra("NOM_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_NOM));
                 startActivity(intent);
             }
         });

@@ -21,13 +21,13 @@ public class GroceryDatabase extends SQLiteOpenHelper {
 
 //  Nom des tables et colonnes
     private static final String TABLE_LISTES = "table_listes";
-    private static final String LISTE_ID = "listeID";
-    private static final String LISTE_NOM = "nom";
+    protected static final String LISTE_ID = "listeID";
+    protected static final String LISTE_NOM = "nom";
     private static final String LISTE_DATE = "dateCreation";
 
     private static final String TABLE_ARTICLES = "table_items";
-    private static final String ARTICLE_ID = "articleID";
-    private static final String ARTICLE_NOM = "nom";
+    protected static final String ARTICLE_ID = "articleID";
+    protected static final String ARTICLE_NOM = "nom";
     private static final String ARTICLE_QUANTITE = "quantite";
     private static final String ARTICLE_RECUPERE = "recupere";
     private static final String ARTICLE_PRIORITE = "priorite";
@@ -116,19 +116,19 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     }
 
     // Obtenir la liste des articles d'une liste de courses
-    public ArrayList<HashMap<String, String>> getArticles(int id) {
+    public ArrayList<HashMap<String, String>> getArticles(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<HashMap<String, String>> listeArticles = new ArrayList<>();
-        String query = "SELECT " + ARTICLE_NOM + ", " + ARTICLE_QUANTITE + ", " + ARTICLE_PRIORITE +
-                ", " + ARTICLE_RECUPERE + ", " + ARTICLE_ID + " FROM "+ TABLE_LISTES + " WHERE " +
-                LISTE_ID + " = " + id + " ORDER BY " + ARTICLE_PRIORITE + ", " + ARTICLE_NOM;
+        String query = "SELECT " + ARTICLE_NOM + ", " +/* ARTICLE_QUANTITE + ", " + ARTICLE_PRIORITE +
+                ", " + ARTICLE_RECUPERE + ", " +*/ ARTICLE_ID + " FROM "+ TABLE_LISTES + " WHERE " +
+                LISTE_ID + " = " + id + " ORDER BY " + /*ARTICLE_PRIORITE + ", " +*/ ARTICLE_NOM;
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
             HashMap<String,String> liste = new HashMap<>();
             liste.put(ARTICLE_NOM, cursor.getString(cursor.getColumnIndex(ARTICLE_NOM)));
-            liste.put(ARTICLE_QUANTITE, cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
-            liste.put(ARTICLE_PRIORITE, cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
-            liste.put(ARTICLE_RECUPERE, cursor.getString(cursor.getColumnIndex(ARTICLE_RECUPERE)));
+           /* liste.put(ARTICLE_QUANTITE, cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
+            liste.put(ARTICLE_PRIORITE, cursor.getString(cursor.getColumnIndex(ARTICLE_PRIORITE)));
+            liste.put(ARTICLE_RECUPERE, cursor.getString(cursor.getColumnIndex(ARTICLE_RECUPERE)));*/
             liste.put(ARTICLE_ID, cursor.getString(cursor.getColumnIndex(ARTICLE_ID)));
             listeArticles.add(liste);
         }
