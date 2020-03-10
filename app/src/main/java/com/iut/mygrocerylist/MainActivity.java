@@ -24,6 +24,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> listeListes;
+    final GroceryDatabase db = new GroceryDatabase(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Affichage des listes
-        final GroceryDatabase db = new GroceryDatabase(this);
         listeListes = db.getListes();
         ListView lv = findViewById(R.id.listeListes);
         ListAdapter adapter = new SimpleAdapter(MainActivity.this, listeListes, R.layout.list_row_listes,
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 String result = data.getStringExtra("result");
             }
             */
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getApplicationContext(), R.string.cancel_create_list, Toast.LENGTH_SHORT).show();
+        if (resultCode == Activity.RESULT_CANCELED) {
+            Toast.makeText(getApplicationContext(), R.string.cancel_create_list, Toast.LENGTH_SHORT).show();
+            recreate();
         }
     }
 }

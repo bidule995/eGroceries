@@ -38,7 +38,8 @@
                 android:ems="10"
                 android:hint="@string/enter_list_name"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="22" />
 
             <Button
                 android:id="@+id/ajouterListe"

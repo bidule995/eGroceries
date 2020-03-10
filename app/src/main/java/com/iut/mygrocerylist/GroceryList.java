@@ -21,6 +21,7 @@ import java.util.Objects;
 public class GroceryList extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> listeArticles;
+    final GroceryDatabase db = new GroceryDatabase(this);
     String idListe;
 
     @Override
@@ -38,12 +39,11 @@ public class GroceryList extends AppCompatActivity {
         getSupportActionBar().setTitle(this.getIntent().getExtras().getString("NOM_LISTE"));
 
         // Affichage des articles
-        GroceryDatabase db = new GroceryDatabase(this);
         listeArticles = db.getArticles(idListe);
-        ListView lv = findViewById(R.id.listeListes);
+        ListView lv = findViewById(R.id.listeArticles);
         ListAdapter adapter = new SimpleAdapter(GroceryList.this, listeArticles, R.layout.list_row_articles,
-                new String[]{"nom"},
-                new int[]{R.id.articleLigneNom});
+                new String[]{"nom", "nom"},
+                new int[]{R.id.articleLigneNom, R.id.articleLigneNom});
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -60,6 +60,7 @@ public class GroceryList extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.editAction).setVisible(true);
         return true;
     }
 

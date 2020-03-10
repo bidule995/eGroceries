@@ -26,6 +26,7 @@
     <string name="enter_list_name">Entrez le nom de la liste</string>
     <string name="add">Ajouter</string>
     <string name="nom_liste_vide">Merci d\'entrer un nom</string>
+    <string name="lists">Vos listes de courses</string>
 
 
 </resources>

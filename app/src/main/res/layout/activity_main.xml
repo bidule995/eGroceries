@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:tint="#00FFFFFF"
-        app:srcCompat="@drawable/baseline_add_24" />
+        android:tint="#FFFFFFFF"
+        app:fabSize="auto"
+        app:maxImageSize="35dp"
+        app:srcCompat="@drawable/ic_post_add_24px" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

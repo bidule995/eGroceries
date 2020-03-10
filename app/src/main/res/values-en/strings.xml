@@ -9,4 +9,5 @@
     <string name="enter_list_name">Enter the list name</string>
     <string name="add">Add</string>
     <string name="nom_liste_vide">Please enter a name</string>
+    <string name="lists">Your grocery lists</string>
 </resources>

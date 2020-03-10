@@ -52,9 +52,8 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // Création des tables
-        sqLiteDatabase.execSQL(CREATE_TABLE_LISTES);
         sqLiteDatabase.execSQL(CREATE_TABLE_ARTICLES);
-
+        sqLiteDatabase.execSQL(CREATE_TABLE_LISTES);
     }
 
     @Override
@@ -112,6 +111,7 @@ public class GroceryDatabase extends SQLiteOpenHelper {
             listeListes.add(liste);
         }
         cursor.close();
+        db.close();
         return listeListes;
     }
 
@@ -119,20 +119,21 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getArticles(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<HashMap<String, String>> listeArticles = new ArrayList<>();
-        String query = "SELECT " + ARTICLE_NOM + ", " +/* ARTICLE_QUANTITE + ", " + ARTICLE_PRIORITE +
-                ", " + ARTICLE_RECUPERE + ", " +*/ ARTICLE_ID + " FROM "+ TABLE_LISTES + " WHERE " +
-                LISTE_ID + " = " + id + " ORDER BY " + /*ARTICLE_PRIORITE + ", " +*/ ARTICLE_NOM;
+        String query = "SELECT " + ARTICLE_NOM + ", " + ARTICLE_QUANTITE + ", " + ARTICLE_PRIORITE +
+                ", " + ARTICLE_RECUPERE + ", " + ARTICLE_ID + " FROM "+ TABLE_ARTICLES + " WHERE " +
+                LISTE_ID + " = " + id + " ORDER BY " + ARTICLE_PRIORITE + ", " + ARTICLE_NOM;
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
             HashMap<String,String> liste = new HashMap<>();
             liste.put(ARTICLE_NOM, cursor.getString(cursor.getColumnIndex(ARTICLE_NOM)));
-           /* liste.put(ARTICLE_QUANTITE, cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
+            liste.put(ARTICLE_QUANTITE, cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
             liste.put(ARTICLE_PRIORITE, cursor.getString(cursor.getColumnIndex(ARTICLE_PRIORITE)));
-            liste.put(ARTICLE_RECUPERE, cursor.getString(cursor.getColumnIndex(ARTICLE_RECUPERE)));*/
+            liste.put(ARTICLE_RECUPERE, cursor.getString(cursor.getColumnIndex(ARTICLE_RECUPERE)));
             liste.put(ARTICLE_ID, cursor.getString(cursor.getColumnIndex(ARTICLE_ID)));
             listeArticles.add(liste);
         }
         cursor.close();
+        db.close();
         return listeArticles;
     }
 
