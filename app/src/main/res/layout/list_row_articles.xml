@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="2dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="2dp"
     android:orientation="horizontal">
 
     <TextView
@@ -10,14 +13,18 @@
         android:layout_width="334dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:text="zizifesse"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="76dp"
+    <CheckBox
+        android:id="@+id/articleRecupereCheckBox"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:tint="@android:color/secondary_text_light"
-        app:srcCompat="@drawable/ic_double_arrow_24px" />
+        android:layout_gravity="right"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="2dp"
+        android:scaleX="1.30"
+        android:scaleY="1.30" />
 
 </GridLayout>

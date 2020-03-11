@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, GroceryList.class);
                 intent.putExtra("ID_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_ID));
                 intent.putExtra("NOM_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_NOM));
+                intent.putExtra("PROGRESS_VALUE", listeListes.get(position).get("progressValue"));
                 startActivity(intent);
             }
         });

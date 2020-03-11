@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -22,7 +24,7 @@ public class GroceryList extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> listeArticles;
     final GroceryDatabase db = new GroceryDatabase(this);
-    String idListe;
+    String idListe, nomListe, valeurProgression;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +32,37 @@ public class GroceryList extends AppCompatActivity {
         setContentView(R.layout.activity_grocery_list);
 
         TextView testId = findViewById(R.id.idTest);
+        TextView titreListe = findViewById(R.id.listeNom);
+        TextView progressValue = findViewById(R.id.listProgressValue);
 
-        // Récupérer l'ID de la liste
+
+        // Récupérer l'ID et le titre de la liste
         idListe = this.getIntent().getExtras().getString("ID_LISTE");
+        nomListe = this.getIntent().getExtras().getString("NOM_LISTE");
+        valeurProgression = this.getIntent().getExtras().getString("PROGRESS_VALUE");
+
         testId.setText(idListe);
+        titreListe.setText(nomListe);
+        progressValue.setText(valeurProgression);
 
         // Titre de l'activité
         getSupportActionBar().setTitle(this.getIntent().getExtras().getString("NOM_LISTE"));
+
+        // Gestion du bouton flottant pour ajouter une liste
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(GroceryList.this, AddArticle.class),1);
+            }
+        });
 
         // Affichage des articles
         listeArticles = db.getArticles(idListe);
         ListView lv = findViewById(R.id.listeArticles);
         ListAdapter adapter = new SimpleAdapter(GroceryList.this, listeArticles, R.layout.list_row_articles,
-                new String[]{"nom", "nom"},
-                new int[]{R.id.articleLigneNom, R.id.articleLigneNom});
+                new String[]{"nom", "recupere"},
+                new int[]{R.id.articleLigneNom, R.id.articleRecupereCheckBox});
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override

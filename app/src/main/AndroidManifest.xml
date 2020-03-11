@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".AddArticle"></activity>
         <activity
             android:name=".CreateList"
             android:label="@string/action_create_list" />
