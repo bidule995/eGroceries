@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -59,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("NOM_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_NOM));
                 intent.putExtra("PROGRESS_VALUE", listeListes.get(position).get("progressValue"));
                 startActivity(intent);
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                LinearLayout layoutBottomSheet = findViewById(R.id.list_long_click);
+                BottomSheetBehavior bottomSheet = BottomSheetBehavior.from(layoutBottomSheet);
+                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
+                bottomSheet.setPeekHeight(340);
+                return true;
             }
         });
     }
