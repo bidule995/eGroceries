@@ -12,4 +12,10 @@
     <string name="lists">Your grocery lists</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="confirm_delete">Are you sure you want to delete</string>
+    <string name="q_mark">\?</string>
+    <string name="yes_delete">Yes, delete</string>
+    <string name="no_cancel">No, cancel</string>
+    <string name="list_deletion_canceled">List deletion cancelled</string>
+    <string name="list_deletion_confirmed">List deletion confirmed</string>
 </resources>

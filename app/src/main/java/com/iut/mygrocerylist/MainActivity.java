@@ -1,12 +1,14 @@
 package com.iut.mygrocerylist;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,10 +16,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,13 +27,24 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<HashMap<String, String>> listeListes;
-    final GroceryDatabase db = new GroceryDatabase(this);
+    private ArrayList<HashMap<String, String>> listeListes;
+    private String nomListe, idListe;
+    private View dialogView;
+    private BottomSheetDialog dialog;
+    private Intent intentEdit, intentDelete;
+    private final GroceryDatabase db = new GroceryDatabase(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        idListe = null;
+
+        dialogView = getLayoutInflater().inflate(R.layout.list_bottom_sheet, null);
+        dialog = new BottomSheetDialog(this);
+        dialog.setContentView(dialogView);
+        dialog.dismiss();
 
         // Affichage du menu
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -63,15 +76,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LinearLayout layoutBottomSheet = findViewById(R.id.list_long_click);
-                BottomSheetBehavior bottomSheet = BottomSheetBehavior.from(layoutBottomSheet);
-                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
-                bottomSheet.setState(BottomSheetBehavior.STATE_HIDDEN);
-                bottomSheet.setPeekHeight(340);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id) {
+                dialog.show();
+                intentEdit = new Intent(MainActivity.this, EditGroceryList.class);
+                intentEdit.putExtra("ID_LISTE", listeListes.get(i).get(GroceryDatabase.LISTE_ID));
+                nomListe = listeListes.get(i).get(GroceryDatabase.LISTE_NOM);
+                idListe = listeListes.get(i).get(GroceryDatabase.LISTE_ID);
                 return true;
             }
         });
@@ -97,15 +110,39 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Clic sur le bottom sheet
+    public void onClickEditBottom(View view) {
+        dialog.dismiss();
+        startActivity(intentEdit);
+    }
+
+    public void onClickDeleteBottom(View view) {
+        AlertDialog.Builder confirmDeleteList = new AlertDialog.Builder(this);
+        confirmDeleteList.setMessage(getString(R.string.confirm_delete) + " " + nomListe + getString(R.string.q_mark));
+        confirmDeleteList.setPositiveButton(R.string.yes_delete, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogI, int which) {
+                Toast.makeText(getApplicationContext(), getString(R.string.list_deletion_confirmed), Toast.LENGTH_SHORT).show();
+                db.deleteListe(idListe);
+                dialog.dismiss();
+                recreate();
+            }
+        });
+        confirmDeleteList.setNegativeButton(R.string.no_cancel, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogI, int which) {
+                Toast.makeText(getApplicationContext(), getString(R.string.list_deletion_canceled), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialogConfirmDeleteList = confirmDeleteList.create();
+        dialogConfirmDeleteList.show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*
-        if (requestCode == LIST_CREATED) {
-            if (resultCode == Activity.RESULT_OK) {
-                String result = data.getStringExtra("result");
-            }
-            */
+
         if (resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(getApplicationContext(), R.string.cancel_create_list, Toast.LENGTH_SHORT).show();
             recreate();

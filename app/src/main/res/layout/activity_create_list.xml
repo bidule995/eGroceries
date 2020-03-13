@@ -7,17 +7,12 @@
     android:orientation="vertical"
     tools:context=".CreateList">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:layout_gravity="clip_horizontal|center" />
-
     <androidx.cardview.widget.CardView
         android:layout_width="382dp"
         android:layout_height="149dp"
         android:layout_gravity="center"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="615dp"
         app:cardCornerRadius="3dp"
@@ -33,7 +28,7 @@
 
             <EditText
                 android:id="@+id/nomListe"
-                android:layout_width="242dp"
+                android:layout_width="235dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/enter_list_name"
@@ -47,8 +42,8 @@
                 android:layout_height="58dp"
                 android:layout_gravity="bottom|end"
                 android:layout_marginTop="20dp"
-                android:text="@string/add"
-                android:onClick="onClickAjouter"/>
+                android:onClick="onClickAjouter"
+                android:text="@string/add" />
 
         </LinearLayout>
 

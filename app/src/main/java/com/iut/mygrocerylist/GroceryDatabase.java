@@ -33,6 +33,11 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     private static final String ARTICLE_PRIORITE = "priorite";
     private static final String ARTICLE_REMARQUES = "remarques";
 
+    private static final String TABLE_SUGGESTIONS = "table_suggestions";
+    private static final String SUGGESTION_ID = "suggestionID";
+    private static final String SUGGESTION_NOM = "nom";
+    private static final String SUGGESTION_POIDS = "poids";
+
 //  Requêtes de création des tables
     private static final String CREATE_TABLE_LISTES = "CREATE TABLE " + TABLE_LISTES + " (" +
             LISTE_ID + " INTEGER PRIMARY KEY, " + LISTE_NOM + " VARCHAR(50), " +
@@ -45,6 +50,10 @@ public class GroceryDatabase extends SQLiteOpenHelper {
             LISTE_ID + " INTEGER, FOREIGN KEY(" + LISTE_ID + ") REFERENCES " + TABLE_LISTES + "(" +
             LISTE_ID + "));";
 
+    private static final String CREATE_TABLE_SUGGESTIONS = "CREATE TABLE " + TABLE_SUGGESTIONS + " (" +
+            SUGGESTION_ID + " INTEGER PRIMARY KEY, " + SUGGESTION_NOM + " VARCHAR(50), " +
+            SUGGESTION_POIDS + " INT);";
+
     public GroceryDatabase(Context context) {
         super(context, DB_NAME, null, 1);
     }
@@ -54,6 +63,7 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         // Création des tables
         sqLiteDatabase.execSQL(CREATE_TABLE_ARTICLES);
         sqLiteDatabase.execSQL(CREATE_TABLE_LISTES);
+        sqLiteDatabase.execSQL(CREATE_TABLE_SUGGESTIONS);
     }
 
     @Override
@@ -64,6 +74,7 @@ public class GroceryDatabase extends SQLiteOpenHelper {
 
     // Insérer un nouvel article
     public void insertNewListe(String nom) {
+        nom = formatName(nom);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(LISTE_NOM, nom);
@@ -73,16 +84,26 @@ public class GroceryDatabase extends SQLiteOpenHelper {
 
     // Insérer un nouvel article
     public void insertNewArticle(String nom, int quantite, String priorite, @Nullable String remarques) {
+        nom = formatName(nom);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ARTICLE_NOM, nom); values.put(ARTICLE_QUANTITE, quantite); values.put(ARTICLE_PRIORITE, priorite);
         if(!remarques.isEmpty()) values.put(ARTICLE_REMARQUES, remarques);
         db.insert(TABLE_ARTICLES, null, values);
+        ContentValues valuesSuggestions = new ContentValues();
+        String s = checkIfSuggestionExists(nom);
+        if(s == null){
+            valuesSuggestions.put(SUGGESTION_NOM, nom); valuesSuggestions.put(SUGGESTION_POIDS, 1);
+            db.insert(TABLE_SUGGESTIONS, null, valuesSuggestions);
+        } else {
+            db.rawQuery("UPDATE " + TABLE_SUGGESTIONS + " SET " + SUGGESTION_POIDS + " = " +
+                    SUGGESTION_POIDS + " + 1 WHERE " + SUGGESTION_ID + " = " + s, null);
+        }
         db.close();
     }
 
     // Supprimer une liste
-    public void deleteListe(int listeID) {
+    public void deleteListe(String listeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_LISTES, LISTE_ID + " = ?", new String[]{String.valueOf(listeID)});
         db.delete(TABLE_ARTICLES, LISTE_ID + " = ?", new String[]{String.valueOf(listeID)});
@@ -212,4 +233,25 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         }
         return priorite;
     }
+
+    // Renvoie id si existe, null sinon
+    public String checkIfSuggestionExists(String name) {
+        String test = getValueFromQuery("EXIST(SELECT 1 FROM " + TABLE_SUGGESTIONS + " WHERE "
+                + SUGGESTION_NOM + " = \"" + name + "\")");
+        if(test == "1"){
+            return getValueFromQuery("SELECT " + SUGGESTION_ID + " FROM " + TABLE_SUGGESTIONS + " WHERE "
+                    + SUGGESTION_NOM  + " = \"" + name + "\")");
+        } else {
+            return null;
+        }
+    }
+
+    public String formatName(String name) {
+        name = name.toLowerCase();
+        String s = name.substring(0, 1).toUpperCase();
+        name = s + name.substring(1);
+        return name;
+    }
 }
+
+

@@ -8,7 +8,9 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15">
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="onClickEditBottom">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -20,15 +22,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10"
+            android:layout_marginStart="15dp"
             android:gravity="center"
-            android:text="@string/delete"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:text="@string/edit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="18sp" />
     </TableRow>
 
     <TableRow
+        android:id="@+id/listeBottomDelete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:onClick="onClickDeleteBottom">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -40,9 +46,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10"
+            android:layout_marginStart="15dp"
             android:gravity="center"
-            android:text="@string/edit"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:text="@string/delete"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="18sp" />
     </TableRow>
 </LinearLayout>

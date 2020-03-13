@@ -29,6 +29,12 @@
     <string name="lists">Vos listes de courses</string>
     <string name="delete">Supprimer</string>
     <string name="edit">Editer</string>
+    <string name="confirm_delete">Confirmez-vous la suppresion de</string>
+    <string name="q_mark">" ?"</string>
+    <string name="yes_delete">Oui, supprimer</string>
+    <string name="no_cancel">Non, annuler</string>
+    <string name="list_deletion_canceled">Suppression de la liste annulée</string>
+    <string name="list_deletion_confirmed">La liste a bien été supprimée</string>
 
 
 </resources>
