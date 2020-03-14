@@ -35,6 +35,9 @@
     <string name="no_cancel">Non, annuler</string>
     <string name="list_deletion_canceled">Suppression de la liste annulée</string>
     <string name="list_deletion_confirmed">La liste a bien été supprimée</string>
+    <string name="action_add_article">Ajouter un article à la liste</string>
+    <string name="enter_article_name">Entrez le nom de l\'article</string>
+    <string name="cancel_add_article">Ajout de l\'article annulé</string>
 
 
 </resources>

@@ -41,10 +41,13 @@ public class CreateList extends AppCompatActivity {
 
     // Lors du clic sur le bouton Ajouter
     public void onClickAjouter(View view) {
+        long id;
         String nomListe = this.nomListe.getText().toString();
         GroceryDatabase db = new GroceryDatabase(CreateList.this);
-        if(nomListeCorrect(nomListe)) db.insertNewListe(nomListe);
+        if(nomListeCorrect(nomListe)) {
+            id = db.insertNewListe(nomListe);
+            Intent intent = new Intent(CreateList.this, GroceryList.class);
+            intent.putExtra("ID_LISTE", id);
+        }
     }
-
-
 }

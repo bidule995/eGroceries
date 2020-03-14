@@ -6,21 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".GroceryList">
 
-    <include
-        layout="@layout/list_row_listes"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/idTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp">
 
-    <ListView
-        android:id="@+id/listeArticles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <include
+                layout="@layout/header_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.cardview.widget.CardView>
+
+        <ListView
+            android:id="@+id/listeArticles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

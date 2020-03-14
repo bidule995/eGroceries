@@ -12,10 +12,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".EditGroceryList"></activity>
-        <activity android:name=".AddArticle" />
         <activity
-            android:name=".CreateList"
-            android:label="@string/action_create_list" />
+        android:name=".CreateList"
+        android:label="@string/action_create_list" />
+        <activity
+            android:name=".AddArticle"
+            android:label="@string/action_add_article" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings" />

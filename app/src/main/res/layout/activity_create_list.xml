@@ -8,12 +8,12 @@
     tools:context=".CreateList">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="382dp"
+        android:layout_width="match_parent"
         android:layout_height="149dp"
         android:layout_gravity="center"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="55dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="615dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="2dp"
@@ -21,15 +21,18 @@
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/nomListe"
-                android:layout_width="235dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
                 android:ems="10"
                 android:hint="@string/enter_list_name"
                 android:importantForAutofill="no"
