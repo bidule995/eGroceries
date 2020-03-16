@@ -11,10 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditGroceryList"></activity>
         <activity
-        android:name=".CreateList"
-        android:label="@string/action_create_list" />
+            android:name=".EditArticle"
+            android:label="@string/edit_article"/>
+        <activity
+            android:name=".EditGroceryList"
+            android:label="@string/edit_liste"/>
+        <activity
+            android:name=".CreateList"
+            android:label="@string/action_create_list" />
         <activity
             android:name=".AddArticle"
             android:label="@string/action_add_article" />

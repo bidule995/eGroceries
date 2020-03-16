@@ -38,6 +38,19 @@
     <string name="action_add_article">Ajouter un article à la liste</string>
     <string name="enter_article_name">Entrez le nom de l\'article</string>
     <string name="cancel_add_article">Ajout de l\'article annulé</string>
+    <string name="validate">Valider</string>
+    <string name="priority">Priorité</string>
+    <string name="notes">Remarques</string>
+    <string name="nb">nb</string>
+    <string name="article_name">Nom de l\'article</string>
+    <string name="edit_article_successful">L\'article a bien été édité</string>
+    <string name="cancel_edit_article">Modification de l\'article annulée</string>
+    <string name="edit_article">Modification de l\'article</string>
+    <string name="article_deletion_canceled">Suppression de l\'article annulée</string>
+    <string name="article_deletion_confirmed">L\'article a bien été supprimé</string>
+    <string name="edit_liste">Modification de la liste</string>
+    <string name="cancel_edit_liste">Modification de la liste annulée</string>
+    <string name="edit_liste_successful">La liste a bien été modifiée</string>
 
 
 </resources>

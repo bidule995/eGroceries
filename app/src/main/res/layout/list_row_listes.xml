@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="5dp"
             android:gravity="end"
             android:textAlignment="viewEnd"
             android:textSize="18sp"
@@ -40,6 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" />
+        android:layout_marginEnd="10dp"
+        android:max="100"
+        android:progressTint="@color/colorAccent" />
 
 </LinearLayout>

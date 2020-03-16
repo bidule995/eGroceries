@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="2dp"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/articleLigneNom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="end"
+            android:text="x"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/articleQuantite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0"
+            android:gravity="end"
+            android:text="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            tools:ignore="HardcodedText" />
+
+        <CheckBox
+            android:id="@+id/articleRecupereCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0"
+            android:focusable="false"
+            android:onClick="onClickArticleRecupereCheckBox"
+            android:scaleX="1.30"
+            android:scaleY="1.30" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/articleLigneNom"
-        android:layout_width="334dp"
+        android:id="@+id/articleRemarques"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="51dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:maxHeight="100dp" />
 
-    <CheckBox
-        android:id="@+id/articleRecupereCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical"
-        android:scaleX="1.30"
-        android:scaleY="1.30" />
-
-</GridLayout>
+</LinearLayout>

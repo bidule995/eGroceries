@@ -21,4 +21,17 @@
     <string name="action_add_article">Add a grocery to the list</string>
     <string name="enter_article_name">Enter the grocery name</string>
     <string name="cancel_add_article">Addition of the grocery canceled</string>
+    <string name="validate">Validate</string>
+    <string name="priority">Priority</string>
+    <string name="notes">Notes</string>
+    <string name="nb">nb</string>
+    <string name="article_name">Article name</string>
+    <string name="edit_article_successful">The grocery has been edited</string>
+    <string name="cancel_edit_article">The edition of the article has been cancelled</string>
+    <string name="edit_article">Modification of the grocery</string>
+    <string name="article_deletion_canceled">Grocery deletion canceled</string>
+    <string name="article_deletion_confirmed">The article has been deleted</string>
+    <string name="edit_liste">Modification of the list</string>
+    <string name="cancel_edit_liste">The edition of the list has been cancelled</string>
+    <string name="edit_liste_successful">The list has been modified</string>
 </resources>

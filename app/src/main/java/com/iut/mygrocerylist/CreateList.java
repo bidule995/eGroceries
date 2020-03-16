@@ -6,25 +6,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 public class CreateList extends AppCompatActivity {
 
-    EditText nomListe;
-    Button ajouterListe;
+    private EditText nomListe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list);
         this.nomListe = findViewById(R.id.nomListe);
-        this.ajouterListe = findViewById(R.id.ajouterListe);
     }
 
     @Override
     public void onBackPressed() {
         Intent returnIntent = new Intent();
+        returnIntent.putExtra("CANCEL_MSG", getResources().getString(R.string.cancel_create_list));
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
     }
@@ -41,13 +39,15 @@ public class CreateList extends AppCompatActivity {
 
     // Lors du clic sur le bouton Ajouter
     public void onClickAjouter(View view) {
-        long id;
+        String id;
         String nomListe = this.nomListe.getText().toString();
         GroceryDatabase db = new GroceryDatabase(CreateList.this);
         if(nomListeCorrect(nomListe)) {
-            id = db.insertNewListe(nomListe);
-            Intent intent = new Intent(CreateList.this, GroceryList.class);
+            id = db.insertNewListe(nomListe) + "";
+            Intent intent = new Intent(CreateList.this, MainActivity.class);
             intent.putExtra("ID_LISTE", id);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 }

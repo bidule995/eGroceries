@@ -42,10 +42,11 @@ public class AddArticle extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                db.insertNewArticle(listeSuggestions.get(position).get(GroceryDatabase.SUGGESTION_NOM), listeSuggestions.get(position).get(GroceryDatabase.SUGGESTION_ID));
+                db.insertNewArticle(listeSuggestions.get(position).get(GroceryDatabase.SUGGESTION_NOM), idListe);
                 Intent intent = new Intent(AddArticle.this, GroceryList.class);
-                intent.putExtra("ID_ARTICLE", listeSuggestions.get(position).get(GroceryDatabase.ARTICLE_ID));
-                startActivity(intent);
+                intent.putExtra("ID_LISTE", listeSuggestions.get(position).get(GroceryDatabase.ARTICLE_ID));
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
     }
@@ -53,7 +54,12 @@ public class AddArticle extends AppCompatActivity {
     public void onClickAjouter(View view) {
         String nomArticle = this.inputNomArticle.getText().toString();
         if(nomArticleCorrect(nomArticle)) {
-            db.insertNewArticle(nomArticle, idListe);
+            String test = db.checkIfArticleExistsInList(nomArticle, idListe);
+            if (test == null) {
+                db.insertNewArticle(nomArticle, idListe);
+            } else {
+                db.incrementArticleQuantity(test);
+            }
             setResult(Activity.RESULT_OK, new Intent());
             finish();
         }

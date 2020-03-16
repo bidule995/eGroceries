@@ -18,8 +18,6 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TableRow;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private String nomListe, idListe;
     private View dialogView;
     private BottomSheetDialog dialog;
-    private Intent intentEdit, intentDelete;
+    private Intent intentEdit;
     private final GroceryDatabase db = new GroceryDatabase(this);
 
     @Override
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         // Affichage des listes
         listeListes = db.getListes();
         ListView lv = findViewById(R.id.listeListes);
-        ListAdapter adapter = new SimpleAdapter(MainActivity.this, listeListes, R.layout.list_row_listes,
+        ListAdapter adapter = new ListesAdapter(MainActivity.this, listeListes, R.layout.list_row_listes,
                 new String[]{"nom", "progressValue"},
                 new int[]{R.id.listeNom, R.id.listProgressValue});
         lv.setAdapter(adapter);
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ID_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_ID));
                 intent.putExtra("NOM_LISTE", listeListes.get(position).get(GroceryDatabase.LISTE_NOM));
                 intent.putExtra("PROGRESS_VALUE", listeListes.get(position).get("progressValue"));
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     // Clic sur le bottom sheet
     public void onClickEditBottom(View view) {
         dialog.dismiss();
-        startActivity(intentEdit);
+        startActivityForResult(intentEdit,1);
     }
 
     public void onClickDeleteBottom(View view) {
@@ -142,10 +140,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        recreate();
 
         if (resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(getApplicationContext(), R.string.cancel_create_list, Toast.LENGTH_SHORT).show();
-            recreate();
+            Toast.makeText(getApplicationContext(), data.getStringExtra("CANCEL_MSG"), Toast.LENGTH_SHORT).show();
+        }
+
+        if (resultCode == Activity.RESULT_OK) {
+            String id = data.getStringExtra("ID_LISTE");
+            Intent intent = new Intent(MainActivity.this, GroceryList.class);
+            intent.putExtra("ID_LISTE", id);
+            startActivity(intent);
         }
     }
 }

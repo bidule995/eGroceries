@@ -1,16 +1,10 @@
 package com.iut.mygrocerylist;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +22,10 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     private static final String TABLE_ARTICLES = "table_items";
     protected static final String ARTICLE_ID = "articleID";
     protected static final String ARTICLE_NOM = "nom";
-    private static final String ARTICLE_QUANTITE = "quantite";
-    private static final String ARTICLE_RECUPERE = "recupere";
-    private static final String ARTICLE_PRIORITE = "priorite";
-    private static final String ARTICLE_REMARQUES = "remarques";
+    protected static final String ARTICLE_QUANTITE = "quantite";
+    protected static final String ARTICLE_RECUPERE = "recupere";
+    protected static final String ARTICLE_PRIORITE = "priorite";
+    protected static final String ARTICLE_REMARQUES = "remarques";
 
     private static final String TABLE_SUGGESTIONS = "table_suggestions";
     protected static final String SUGGESTION_ID = "suggestionID";
@@ -88,7 +82,8 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         nom = formatName(nom);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ARTICLE_NOM, nom); values.put(LISTE_ID, id);
+        values.put(ARTICLE_NOM, nom); values.put(ARTICLE_PRIORITE, 2);
+        values.put(ARTICLE_RECUPERE, 0); values.put(LISTE_ID, id);
         long idArticle = db.insert(TABLE_ARTICLES, null, values);
         ContentValues valuesSuggestions = new ContentValues();
         String s = checkIfSuggestionExists(nom);
@@ -96,19 +91,35 @@ public class GroceryDatabase extends SQLiteOpenHelper {
             valuesSuggestions.put(SUGGESTION_NOM, nom); valuesSuggestions.put(SUGGESTION_POIDS, 1);
             db.insert(TABLE_SUGGESTIONS, null, valuesSuggestions);
         } else {
-            db.rawQuery("UPDATE " + TABLE_SUGGESTIONS + " SET " + SUGGESTION_POIDS + " = " +
+            Cursor c = db.rawQuery("UPDATE " + TABLE_SUGGESTIONS + " SET " + SUGGESTION_POIDS + " = " +
                     SUGGESTION_POIDS + " + 1 WHERE " + SUGGESTION_ID + " = " + s, null);
+            c.moveToFirst();
+            c.close();
         }
         return idArticle;
     }
 
-    // Insérer un nouvel article
-    public void modifyArticle(String id, String nom, int quantite, String priorite, @Nullable String remarques) {
+    // Modifier une liste
+    public void modifyListe(String id, String nom) {
         nom = formatName(nom);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.rawQuery("UPDATE " + TABLE_ARTICLES + " SET " + ARTICLE_NOM + " = " + nom + ", "
+        Cursor c = db.rawQuery("UPDATE " + TABLE_LISTES + " SET " + LISTE_NOM + " = '" + nom +
+                "' WHERE " + LISTE_ID + " = " + id, null);
+        c.moveToFirst();
+        c.close();
+    }
+
+    // Modifier un article
+    public void modifyArticle(String id, String nom, String quantite, String priorite, String remarques, String recupere) {
+        nom = formatName(nom);
+        SQLiteDatabase db = this.getWritableDatabase();
+        if(quantite.equals("")) quantite = "null";
+        Cursor c = db.rawQuery("UPDATE " + TABLE_ARTICLES + " SET " + ARTICLE_NOM + " = '" + nom + "', "
                 + ARTICLE_QUANTITE + " = " + quantite + ", " + ARTICLE_PRIORITE + " = " + priorite + ", "
-                + ARTICLE_REMARQUES + " = " + remarques + " WHERE " + ARTICLE_ID + " = " + id, null);
+                + ARTICLE_REMARQUES + " = '" + remarques + "', " + ARTICLE_RECUPERE + " = " + recupere +
+                " WHERE " + ARTICLE_ID + " = " + id, null);
+        c.moveToFirst();
+        c.close();
         ContentValues valuesSuggestions = new ContentValues();
         String s = checkIfSuggestionExists(nom);
         if(s == null) {
@@ -126,7 +137,7 @@ public class GroceryDatabase extends SQLiteOpenHelper {
     }
 
     // Supprimer un article
-    public void deleteArticle(int articleID) {
+    public void deleteArticle(String articleID) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ARTICLES, ARTICLE_ID + " = ?", new String[]{String.valueOf(articleID)});
     }
@@ -143,6 +154,7 @@ public class GroceryDatabase extends SQLiteOpenHelper {
             liste.put(LISTE_ID, cursor.getString(cursor.getColumnIndex(LISTE_ID)));
             liste.put(LISTE_NOM, cursor.getString(cursor.getColumnIndex(LISTE_NOM)));
             liste.put("progressValue", getRecuperes(cursor.getString(cursor.getColumnIndex(LISTE_ID))));
+            liste.put("progressValueBar", getValeurProgression(cursor.getString(cursor.getColumnIndex(LISTE_ID)))+"");
             listeListes.add(liste);
         }
         cursor.close();
@@ -154,15 +166,24 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<HashMap<String, String>> listeArticles = new ArrayList<>();
         String query = "SELECT " + ARTICLE_NOM + ", " + ARTICLE_QUANTITE + ", " + ARTICLE_PRIORITE +
-                ", " + ARTICLE_RECUPERE + ", " + ARTICLE_ID + " FROM "+ TABLE_ARTICLES + " WHERE " +
-                LISTE_ID + " = " + id + " ORDER BY " + ARTICLE_PRIORITE + ", " + ARTICLE_NOM;
+                ", " + ARTICLE_RECUPERE + ", " + ARTICLE_REMARQUES + ", " + ARTICLE_ID + " FROM " +
+                TABLE_ARTICLES + " WHERE " + LISTE_ID + " = " + id + " ORDER BY " + ARTICLE_PRIORITE
+                + ", " + ARTICLE_NOM;
         Cursor cursor = db.rawQuery(query,null);
         while (cursor.moveToNext()){
             HashMap<String,String> liste = new HashMap<>();
             liste.put(ARTICLE_NOM, cursor.getString(cursor.getColumnIndex(ARTICLE_NOM)));
-            liste.put(ARTICLE_QUANTITE, cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
+            String quantite = cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE));
+            if(quantite == null){
+                liste.put(ARTICLE_QUANTITE, "1");
+            } else {
+                liste.put(ARTICLE_QUANTITE, quantite);
+
+            }
             liste.put(ARTICLE_PRIORITE, cursor.getString(cursor.getColumnIndex(ARTICLE_PRIORITE)));
+                 //  liste.put(ARTICLE_RECUPERE, "1");
             liste.put(ARTICLE_RECUPERE, cursor.getString(cursor.getColumnIndex(ARTICLE_RECUPERE)));
+            liste.put(ARTICLE_REMARQUES, cursor.getString(cursor.getColumnIndex(ARTICLE_REMARQUES)));
             liste.put(ARTICLE_ID, cursor.getString(cursor.getColumnIndex(ARTICLE_ID)));
             listeArticles.add(liste);
         }
@@ -185,6 +206,25 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         }
         cursor.close();
         return listeSuggestions;
+    }
+
+    // Obtenir un article à partir de son id
+    public Article getArticle(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Article article = new Article(id);
+        String query = "SELECT " + ARTICLE_NOM + ", " + ARTICLE_QUANTITE + ", " + ARTICLE_PRIORITE +
+                ", " + ARTICLE_RECUPERE + ", " + ARTICLE_REMARQUES + " FROM " + TABLE_ARTICLES +
+                " WHERE " + ARTICLE_ID + " = " + id;
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()){
+            article.setNom(cursor.getString(cursor.getColumnIndex(ARTICLE_NOM)));
+            article.setQuantite(cursor.getString(cursor.getColumnIndex(ARTICLE_QUANTITE)));
+            article.setPriorite(cursor.getString(cursor.getColumnIndex(ARTICLE_PRIORITE)));
+            article.setRecupere(cursor.getString(cursor.getColumnIndex(ARTICLE_RECUPERE)));
+            article.setRemarques(cursor.getString(cursor.getColumnIndex(ARTICLE_REMARQUES)));
+        }
+        cursor.close();
+        return article;
     }
 
     // Obtenir une valeur de la base de données
@@ -220,14 +260,14 @@ public class GroceryDatabase extends SQLiteOpenHelper {
 
     // Obtenir le nombre d'articles dans une liste depuis son id
     public String getNbArticles(String idListe) {
-        return getValueFromDb(TABLE_ARTICLES, "COUNT(*)", ARTICLE_ID, idListe);
+        return getValueFromQuery("SELECT COUNT(*) FROM " + TABLE_ARTICLES + " WHERE " + LISTE_ID +
+                " = " + idListe);
     }
 
     // Obtenir le nombre d'articles récupérés dans une liste depuis son id
     public String getNbArticlesRecuperes(String idListe) {
-        String query = "SELECT COUNT(*) FROM " + TABLE_ARTICLES + " WHERE " + LISTE_ID + " = " + idListe
-                + " AND " + ARTICLE_RECUPERE + " = 1";
-        return getValueFromQuery(query);
+        return getValueFromQuery("SELECT COUNT(*) FROM " + TABLE_ARTICLES + " WHERE " + LISTE_ID +
+                " = " + idListe + " AND " + ARTICLE_RECUPERE + " = 1");
     }
 
     // Obtenir le nombre d'articles récupérés sur le nombre d'articles d'une liste depuis son id
@@ -235,30 +275,18 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         return getNbArticlesRecuperes(idListe) + "/" + getNbArticles(idListe);
     }
 
-    public static int getValueFromPriorite(String priorite, Context context) {
-        if (priorite.equals(context.getString(R.string.priority_low))){
-            return 3;
-        } else if (priorite.equals(context.getString(R.string.priority_essential))) {
-            return 1;
-        } else {
-            return 2;
-        }
+    public int getValeurProgression(String idListe) {
+        return (int)((Float.parseFloat(getNbArticlesRecuperes(idListe)) / Float.parseFloat(getNbArticles(idListe))) * 100);
     }
 
-    public static String getPrioriteFromValue(int prioriteValue, Context context) {
-        String priorite;
-        switch(prioriteValue){
-            case 1:
-                priorite = context.getString(R.string.priority_essential);
-                break;
-            case 3:
-                priorite = context.getString(R.string.priority_low);
-                break;
-            default:
-                priorite = context.getString(R.string.priority_normal);
-                break;
+    public static String getValueFromPriorite(String priorite, Context context) {
+        if (priorite.equals(context.getString(R.string.priority_low))){
+            return "3";
+        } else if (priorite.equals(context.getString(R.string.priority_essential))) {
+            return "1";
+        } else {
+            return "2";
         }
-        return priorite;
     }
 
     // Renvoie id si existe, null sinon
@@ -266,7 +294,7 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         name = name.replaceAll("[\"]","");
         String test = getValueFromQuery("SELECT COUNT(*) FROM " + TABLE_SUGGESTIONS + " WHERE "
                 + SUGGESTION_NOM + " = \"" + name + "\" GROUP BY " + SUGGESTION_ID);
-        if(test != "1"){
+        if(test != "0"){
             return getValueFromQuery("SELECT " + SUGGESTION_ID + " FROM " + TABLE_SUGGESTIONS + " WHERE "
                     + SUGGESTION_NOM  + " = \"" + name + "\"");
         } else {
@@ -274,11 +302,43 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         }
     }
 
+    // Renvoie id si existe, null sinon
+    public String checkIfArticleExistsInList(String name, String listID) {
+        name = name.replaceAll("[\"]","");
+        String test = getValueFromQuery("SELECT COUNT(*) FROM " + TABLE_ARTICLES + " WHERE "
+                + ARTICLE_NOM + " = \"" + name + "\" AND " + LISTE_ID + " = " + listID + " GROUP BY " + ARTICLE_ID);
+        if(test != "0"){
+            return getValueFromQuery("SELECT " + ARTICLE_ID + " FROM " + TABLE_ARTICLES + " WHERE "
+                    + ARTICLE_NOM  + " = \"" + name + "\"  AND " + LISTE_ID + " = " + listID);
+        } else {
+            return null;
+        }
+    }
+
     public String formatName(String name) {
+        name = name.replaceAll("[\"]","");
         name = name.toLowerCase();
         String s = name.substring(0, 1).toUpperCase();
         name = s + name.substring(1);
         return name;
+    }
+
+    public void incrementArticleQuantity(String idArticle) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("UPDATE " + TABLE_ARTICLES + " SET " + ARTICLE_QUANTITE + " = "
+                + ARTICLE_QUANTITE + " + 1  WHERE " + ARTICLE_ID + " = "
+                + idArticle, null);
+        c.moveToFirst();
+        c.close();
+    }
+
+    public void setRecupere(String idArticle, String recupere) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("UPDATE " + TABLE_ARTICLES + " SET " + ARTICLE_RECUPERE + " = "
+                + recupere + " WHERE " + ARTICLE_ID + " = " +
+                idArticle, null);
+        c.moveToFirst();
+        c.close();
     }
 }
 
