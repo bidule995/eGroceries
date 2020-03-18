@@ -15,6 +15,7 @@ public class CreateList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Theme.getTheme(this));
         setContentView(R.layout.activity_create_list);
         this.nomListe = findViewById(R.id.nomListe);
     }

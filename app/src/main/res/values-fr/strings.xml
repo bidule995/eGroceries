@@ -34,4 +34,20 @@
     <string name="edit_liste">Modification de la liste</string>
     <string name="cancel_edit_liste">Modification de la liste annulée</string>
     <string name="edit_liste_successful">La liste a bien été modifiée</string>
+    <string name="theme_title">Thème de l\'application</string>
+    <string name="theme_header">Personnalisation</string>
+    <string name="data">Données</string>
+    <string name="reset_suggestions">Réinitialiser les suggestions</string>
+    <string name="confirm_reset">Confirmez-vous la réinitialisation des suggestions ?</string>
+    <string name="yes_reset">Oui, réinitialiser</string>
+    <string name="suggestions_reset_confirmed">Les suggestions ont bien été réinitialisées</string>
+    <string name="suggestions_reset_canceled">Les suggestions n\'ont pas été réinitialisées</string>
+    <string name="article_added">L\'article a bien été ajouté</string>
+    <string name="theme_default">Par défaut</string>
+    <string name="theme_emo_dark">Emo Sombre</string>
+    <string name="theme_envy_green">Vert Envie</string>
+    <string name="theme_furious_red">Rouge Furieux</string>
+    <string name="theme_panther_pink">Rose Panthère</string>
+    <string name="theme_sun_dew_gold">Rosée de Soleil</string>
+    <string name="theme_blizzard_blue">Bleu Blizzard</string>
 </resources>

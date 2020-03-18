@@ -34,4 +34,20 @@
     <string name="edit_liste">Modification of the list</string>
     <string name="cancel_edit_liste">The edition of the list has been cancelled</string>
     <string name="edit_liste_successful">The list has been modified</string>
+    <string name="theme_title">Application theme</string>
+    <string name="theme_header">Customization</string>
+    <string name="data">Data</string>
+    <string name="reset_suggestions">Reset the suggestions</string>
+    <string name="confirm_reset">Are you sure you want to reset the suggestions?</string>
+    <string name="yes_reset">Yes, reset</string>
+    <string name="suggestions_reset_confirmed">The suggestions has been reset</string>
+    <string name="suggestions_reset_canceled">Suggestions have not been reset</string>
+    <string name="article_added">The article has been added</string>
+    <string name="theme_envy_green">Envy Green</string>
+    <string name="theme_sun_dew_gold">Sun Dew Gold</string>
+    <string name="theme_panther_pink">Panther Pink</string>
+    <string name="theme_furious_red">Furious Red</string>
+    <string name="theme_emo_dark">Rouge Furieux</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_blizzard_blue">Blizzard Blue</string>
 </resources>

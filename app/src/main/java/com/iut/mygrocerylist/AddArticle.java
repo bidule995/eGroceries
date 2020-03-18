@@ -28,6 +28,7 @@ public class AddArticle extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Theme.getTheme(this));
         setContentView(R.layout.activity_add_article);
         inputNomArticle = findViewById(R.id.nameArticle);
         idListe = this.getIntent().getExtras().getString("ID_LISTE");
@@ -42,9 +43,16 @@ public class AddArticle extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                db.insertNewArticle(listeSuggestions.get(position).get(GroceryDatabase.SUGGESTION_NOM), idListe);
+                String suggestion = listeSuggestions.get(position).get(GroceryDatabase.SUGGESTION_NOM);
+                String test = db.checkIfArticleExistsInList(suggestion, idListe);
+                if (test == null) {
+                    db.insertNewArticle(suggestion, idListe);
+                } else {
+                    db.incrementArticleQuantity(test);
+                }
                 Intent intent = new Intent(AddArticle.this, GroceryList.class);
                 intent.putExtra("ID_LISTE", listeSuggestions.get(position).get(GroceryDatabase.ARTICLE_ID));
+                intent.putExtra("SUCCESS_MSG", getString(R.string.article_added));
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
@@ -60,7 +68,9 @@ public class AddArticle extends AppCompatActivity {
             } else {
                 db.incrementArticleQuantity(test);
             }
-            setResult(Activity.RESULT_OK, new Intent());
+            Intent intent = new Intent();
+            intent.putExtra("SUCCESS_MSG", getString(R.string.article_added));
+            setResult(Activity.RESULT_OK, intent);
             finish();
         }
     }

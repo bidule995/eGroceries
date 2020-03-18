@@ -34,16 +34,18 @@ public class ArticlesAdapter extends SimpleAdapter {
 
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
-        convertView = mInflater.inflate (R.layout.list_row_articles, null);
-        CheckBox cb = convertView.findViewById(R.id.articleRecupereCheckBox);
-        String recupere = arrayList.get(position).get("recupere");
-        if(recupere == null) recupere = "0";
-        if(recupere.equals("1")){
-            cb.setChecked(true);
-        } else {
-            cb.setChecked(false);
-        }
+        if (convertView==null) {
+            convertView = mInflater.inflate (R.layout.list_row_articles, null);
+            CheckBox cb = convertView.findViewById(R.id.articleRecupereCheckBox);
+            String recupere = arrayList.get(position).get("recupere");
+            if(recupere == null) recupere = "0";
+            if(recupere.equals("1")){
+                cb.setChecked(true);
+            } else {
+                cb.setChecked(false);
+            }
             cb.setTag(position);
+        }
         return super.getView (position, convertView, parent);
     }
 }

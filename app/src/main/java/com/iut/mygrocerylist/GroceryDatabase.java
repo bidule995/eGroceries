@@ -291,10 +291,10 @@ public class GroceryDatabase extends SQLiteOpenHelper {
 
     // Renvoie id si existe, null sinon
     public String checkIfSuggestionExists(String name) {
-        name = name.replaceAll("[\"]","");
+        formatName(name);
         String test = getValueFromQuery("SELECT COUNT(*) FROM " + TABLE_SUGGESTIONS + " WHERE "
                 + SUGGESTION_NOM + " = \"" + name + "\" GROUP BY " + SUGGESTION_ID);
-        if(test != "0"){
+        if(test != null){
             return getValueFromQuery("SELECT " + SUGGESTION_ID + " FROM " + TABLE_SUGGESTIONS + " WHERE "
                     + SUGGESTION_NOM  + " = \"" + name + "\"");
         } else {
@@ -304,10 +304,10 @@ public class GroceryDatabase extends SQLiteOpenHelper {
 
     // Renvoie id si existe, null sinon
     public String checkIfArticleExistsInList(String name, String listID) {
-        name = name.replaceAll("[\"]","");
+        formatName(name);
         String test = getValueFromQuery("SELECT COUNT(*) FROM " + TABLE_ARTICLES + " WHERE "
                 + ARTICLE_NOM + " = \"" + name + "\" AND " + LISTE_ID + " = " + listID + " GROUP BY " + ARTICLE_ID);
-        if(test != "0"){
+        if(test != null){
             return getValueFromQuery("SELECT " + ARTICLE_ID + " FROM " + TABLE_ARTICLES + " WHERE "
                     + ARTICLE_NOM  + " = \"" + name + "\"  AND " + LISTE_ID + " = " + listID);
         } else {
@@ -337,6 +337,13 @@ public class GroceryDatabase extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("UPDATE " + TABLE_ARTICLES + " SET " + ARTICLE_RECUPERE + " = "
                 + recupere + " WHERE " + ARTICLE_ID + " = " +
                 idArticle, null);
+        c.moveToFirst();
+        c.close();
+    }
+
+    public void resetSuggestions() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("DELETE FROM " + TABLE_SUGGESTIONS, null);
         c.moveToFirst();
         c.close();
     }

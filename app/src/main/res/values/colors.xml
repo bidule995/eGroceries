@@ -3,4 +3,28 @@
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#2E7D32</color>
     <color name="colorAccent">#03A9F4</color>
+
+    <color name="envyGreenPrimary">#388E3C</color>
+    <color name="envyGreenPrimaryDark">#1B5E20</color>
+    <color name="envyGreenAccent">#4CAF50</color>
+
+    <color name="sunDewGoldPrimary">#FFC107</color>
+    <color name="sunDewGoldPrimaryDark">#FF9800</color>
+    <color name="sunDewGoldAccent">#FF5722</color>
+
+    <color name="pantherPinkPrimary">#EC407A</color>
+    <color name="pantherPinkPrimaryDark">#AB47BC</color>
+    <color name="pantherPinkAccent">#C2185B</color>
+
+    <color name="blizzardBluePrimary">#42A5F5</color>
+    <color name="blizzardBluePrimaryDark">#1976D2</color>
+    <color name="blizzardBlueAccent">#00ACC1</color>
+
+    <color name="furiousRedPrimary">#D50000</color>
+    <color name="furiousRedPrimaryDark">#C62828</color>
+    <color name="furiousRedAccent">#E53935</color>
+
+    <color name="emoDarkPrimary">#0F0F0F</color>
+    <color name="emoDarkPrimaryDark">#000000</color>
+    <color name="emoDarkAccent">#050505</color>
 </resources>

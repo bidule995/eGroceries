@@ -1,20 +1,45 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="EnvyGreen" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/envyGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/envyGreenPrimaryDark</item>
+        <item name="colorAccent">@color/envyGreenAccent</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="SunDewGold" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/sunDewGoldPrimary</item>
+        <item name="colorPrimaryDark">@color/sunDewGoldPrimaryDark</item>
+        <item name="colorAccent">@color/sunDewGoldAccent</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="PantherPink" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/pantherPinkPrimary</item>
+        <item name="colorPrimaryDark">@color/pantherPinkPrimaryDark</item>
+        <item name="colorAccent">@color/pantherPinkAccent</item>
+    </style>
+
+    <style name="BlizzardBlue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blizzardBluePrimary</item>
+        <item name="colorPrimaryDark">@color/blizzardBluePrimaryDark</item>
+        <item name="colorAccent">@color/blizzardBlueAccent</item>
+    </style>
+
+    <style name="FuriousRed" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/furiousRedPrimary</item>
+        <item name="colorPrimaryDark">@color/furiousRedPrimaryDark</item>
+        <item name="colorAccent">@color/furiousRedAccent</item>
+    </style>
+
+    <style name="EmoDark" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/emoDarkPrimary</item>
+        <item name="colorPrimaryDark">@color/emoDarkPrimaryDark</item>
+        <item name="colorAccent">@color/emoDarkAccent</item>
+    </style>
 
 </resources>

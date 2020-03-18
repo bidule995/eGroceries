@@ -29,6 +29,7 @@ public class EditArticle extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Theme.getTheme(this));
         setContentView(R.layout.activity_edit_article);
 
         this.idArticle = this.getIntent().getExtras().getString("ID_ARTICLE");
@@ -53,7 +54,7 @@ public class EditArticle extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
             return true;
         }
 
@@ -156,6 +157,16 @@ public class EditArticle extends AppCompatActivity {
             return false;
         } else {
             return true;
+        }
+    }
+
+    // Gestion du résultat envoyé par une autre activité
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 134679852) {
+            recreate();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.iut.mygrocerylist;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
@@ -34,6 +35,7 @@ public class GroceryList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Theme.getTheme(this));
         setContentView(R.layout.activity_grocery_list);
         progressValue = findViewById(R.id.listProgressValue);
         listProgressBar = findViewById(R.id.listProgressBar);
@@ -118,9 +120,14 @@ public class GroceryList extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp(){
-        setResult(Activity.RESULT_FIRST_USER, new Intent());
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_FIRST_USER, new Intent());
+        finish();
     }
 
     @Override
@@ -129,13 +136,13 @@ public class GroceryList extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
             return true;
         }
         if (id == R.id.editAction) {
             Intent intent = new Intent(this, EditGroceryList.class);
             intent.putExtra("ID_LISTE", idListe);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
             return true;
         }
 
@@ -146,16 +153,21 @@ public class GroceryList extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        recreate();
 
         if (resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(getApplicationContext(), data.getStringExtra("CANCEL_MSG"), Toast.LENGTH_SHORT).show();
+            recreate();
         }
 
         if (resultCode == Activity.RESULT_OK) {
             Toast.makeText(getApplicationContext(), data.getStringExtra("SUCCESS_MSG"), Toast.LENGTH_SHORT).show();
             ProgressBar listProgressBar = findViewById(R.id.listProgressBar);
             listProgressBar.setProgress(db.getValeurProgression(idListe));
+            recreate();
+        }
+
+        if (resultCode == 134679852) {
+            recreate();
         }
     }
 }

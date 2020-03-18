@@ -10,8 +10,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-
     private ArrayList<HashMap<String, String>> listeListes;
     private String nomListe, idListe;
     private View dialogView;
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Theme.getTheme(this));
         setContentView(R.layout.activity_main);
 
         idListe = null;
@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
         dialog = new BottomSheetDialog(this);
         dialog.setContentView(dialogView);
         dialog.dismiss();
-
-        // Affichage du menu
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // Gestion du bouton flottant pour ajouter une liste
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -101,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
             return true;
         }
 
@@ -143,14 +139,20 @@ public class MainActivity extends AppCompatActivity {
         recreate();
 
         if (resultCode == Activity.RESULT_CANCELED) {
+            recreate();
             Toast.makeText(getApplicationContext(), data.getStringExtra("CANCEL_MSG"), Toast.LENGTH_SHORT).show();
         }
 
         if (resultCode == Activity.RESULT_OK) {
+            recreate();
             String id = data.getStringExtra("ID_LISTE");
             Intent intent = new Intent(MainActivity.this, GroceryList.class);
             intent.putExtra("ID_LISTE", id);
             startActivity(intent);
+        }
+
+        if (resultCode == 134679852) {
+            recreate();
         }
     }
 }

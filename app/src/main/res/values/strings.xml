@@ -1,26 +1,13 @@
 <resources>
     <string name="app_name" translatable="false">eGroceries</string>
     <string name="action_settings">Paramètres</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
+    <string name="theme_header">Personnalisation</string>
+    <string name="data">Données</string>
+    <string name="theme_title">Thème de l\'application</string>
+    <string name="reset_suggestions">Réinitialiser les suggestions</string>
     <string name="priority_essential">Indispensable</string>
     <string name="priority_normal">Moyenne</string>
     <string name="priority_low">Basse</string>
-
     <string name="action_create_list">Nouvelle liste de courses</string>
     <string name="cancel_create_list">Création de la liste annulée</string>
     <string name="enter_list_name">Entrez le nom de la liste</string>
@@ -51,6 +38,16 @@
     <string name="edit_liste">Modification de la liste</string>
     <string name="cancel_edit_liste">Modification de la liste annulée</string>
     <string name="edit_liste_successful">La liste a bien été modifiée</string>
-
-
+    <string name="confirm_reset">Confirmez-vous la réinitialisation des suggestions ?</string>
+    <string name="yes_reset">Oui, réinitialiser</string>
+    <string name="suggestions_reset_confirmed">Les suggestions ont bien été réinitialisées</string>
+    <string name="suggestions_reset_canceled">Les suggestions n\'ont pas été réinitialisées</string>
+    <string name="article_added">L\'article a bien été ajouté</string>
+    <string name="theme_default">Par défaut</string>
+    <string name="theme_envy_green">Vert Envie</string>
+    <string name="theme_sun_dew_gold">Rosée de Soleil</string>
+    <string name="theme_panther_pink">Rose Panthère</string>
+    <string name="theme_blizzard_blue">Bleu Blizzard</string>
+    <string name="theme_furious_red">Rouge Furieux</string>
+    <string name="theme_emo_dark">Emo Sombre</string>
 </resources>
